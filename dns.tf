@@ -5,8 +5,8 @@ check "vcn_state" {
   }
 
   assert {
-    condition     = data.oci_core_vcn.vcn.state == "ACTIVE"
-    error_message = "The VCN must be in the ACTIVE state before oci_core_vcn_dns_resolver_association can be created."
+    condition     = data.oci_core_vcn.vcn.state == "AVAILABLE"
+    error_message = "The VCN must be in the AVAILABLE state before oci_core_vcn_dns_resolver_association can be created."
   }
 }
 
