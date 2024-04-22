@@ -1,6 +1,6 @@
 #Resource Group
 resource "azurerm_resource_group" "rgrp" {
-  name     = "rgrp-tde3-ic-terratest-github-bootstrap"
+  name     = "rgrp-tde3-ic-terratest-oci-network-vcn"
   location = "germanywestcentral"
 }
 output "resource_group_name" {
