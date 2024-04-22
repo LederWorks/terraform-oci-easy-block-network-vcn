@@ -190,7 +190,7 @@ Description:   A map of subnets to be created on the VCN. The vcn\_subnets suppo
   availability\_domain (Optional): The Availability Domain in which the subnet will be created. Omitting this attribute will create a regional subnet.  
   cidr\_block (Required): The CIDR block of the subnet.  
   dhcp\_options\_id (Optional): The OCID of the set of DHCP options the subnet will use. If you don't provide a value, the subnet will use the VCN's default set of DHCP options.  
-  dns\_label (Optional): A DNS label for the subnet, used in conjunction with the VNIC's hostname and VCN's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, bminstance1.subnet123.vcn1.oraclevcn.com). Must be an alphanumeric string that begins with a letter. The value cannot be changed. Omitting this will use the dns label of the VCN.  
+  dns\_label (Optional): A DNS label for the subnet, used in conjunction with the VNIC's hostname and VCN's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, bminstance1.subnet123.vcn1.oraclevcn.com). Must be an alphanumeric string that begins with a letter. The value cannot be changed.  
   internet\_ingress\_disabled (Optional): Whether the subnet has internet ingress disabled. Defaults to true.  
   public\_ip\_on\_vnic\_disabled (Optional): Whether the subnet has public IP on VNIC disabled. Defaults to true.  
   route\_table\_id (Optional): The OCID of the route table the subnet will use. If you don't provide a value, the subnet will use the VCN's default route table.  
