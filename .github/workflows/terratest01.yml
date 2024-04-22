@@ -15,7 +15,7 @@ jobs:
       OCI_USER: ${{ secrets.OCI_USER }}
       OCI_KEY: ${{ secrets.OCI_KEY }}
       OCI_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
-      OCI_REGION: ${{ variables.OCI_REGION }}
+      OCI_REGION: ${{ vars.OCI_REGION }}
 
     steps:
     - name: Checkout repository
