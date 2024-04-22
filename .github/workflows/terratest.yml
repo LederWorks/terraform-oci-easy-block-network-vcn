@@ -1,7 +1,7 @@
 name: Terratest - terraform-provider-easy-brick-category-purpose
 
-# on:
-#   - pull_request
+on:
+  - pull_request
 
 jobs:
   build:
@@ -11,6 +11,10 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      OCI_TENANCY: ${{ secrets.OCI_TENANCY }}
+      OCI_USER: ${{ secrets.OCI_USER }}
+      OCI_KEY: ${{ secrets.OCI_KEY }}
+      OCI_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
 
     steps:
     - name: Checkout repository
