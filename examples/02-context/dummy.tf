@@ -1,6 +1,6 @@
 #Resource Group
 resource "azurerm_resource_group" "rgrp" {
-  name     = "rgrp-tde3-ic-terratest-oci-network-vcn01"
+  name     = "rgrp-tde3-ic-terratest-oci-network-vcn02"
   location = "germanywestcentral"
 }
 output "resource_group_name" {

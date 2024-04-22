@@ -36,7 +36,7 @@ terraform {
     resource_group_name  = "rgrp-pde3-it-terratest"
     storage_account_name = "saccpde3itterratest001"
     container_name       = "terratest-github"
-    key                  = "easy-block-network-vcn.default.tfstate"
+    key                  = "easy-block-network-vcn.context.tfstate"
     snapshot             = true
     use_azuread_auth     = true
   }

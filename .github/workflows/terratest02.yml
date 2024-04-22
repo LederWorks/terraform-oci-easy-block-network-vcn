@@ -1,4 +1,4 @@
-name: Terratest - terraform-oci-easy-block-network-vcn - 01-default
+name: Terratest - terraform-oci-easy-block-network-vcn - 02-context
 
 on:
   - pull_request
@@ -44,5 +44,5 @@ jobs:
 
     - name: Clean up failed resources
       run: |
-        az group delete --name rgrp-tde3-ic-terratest-oci-network-vcn01 --subscription ${{ secrets.ARM_SUBSCRIPTION_ID }} --yes
+        az group delete --name rgrp-tde3-ic-terratest-oci-network-vcn02 --subscription ${{ secrets.ARM_SUBSCRIPTION_ID }} --yes
       if: failure()

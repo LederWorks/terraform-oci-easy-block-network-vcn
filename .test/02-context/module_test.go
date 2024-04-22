@@ -15,7 +15,7 @@ func TestTerraform(t *testing.T) {
 
 	// Retryable errors in terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/01-default",
+		TerraformDir: "../../examples/02-context",
 		Upgrade:      true,
 		BackendConfig: map[string]interface{}{
 			"tenant_id":            os.Getenv("ARM_TENANT_ID"),
@@ -23,14 +23,14 @@ func TestTerraform(t *testing.T) {
 			"resource_group_name":  "rgrp-pde3-it-terratest", // os.Getenv("AZURERM_BACKEND_RGRP"),
 			"storage_account_name": "saccpde3itterratest001", // os.Getenv("AZURERM_BACKEND_SACC"),
 			"container_name":       "terratest-oci",          // os.Getenv("AZURERM_BACKEND_CONTAINER"),
-			"key":                  "easy-block-network-vcn.default.tfstate",
+			"key":                  "easy-block-network-vcn.context.tfstate",
 			"snapshot":             "true",
 			"use_azuread_auth":     "true",
 		},
 	})
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created.
-	defer terraform.Destroy(t, terraformOptions)
+	// defer terraform.Destroy(t, terraformOptions)
 
 	// Run tf version
 	terraform.RunTerraformCommand(t, terraformOptions, "version")
