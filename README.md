@@ -174,9 +174,9 @@ Description:   A map of subnets to be created on the VCN. The vcn\_subnets suppo
 
   TIMEOUTS
 
-  timeout\_create (Optional): The amount of time to wait for the subnet to be created. Defaults to 10 minutes.  
-  timeout\_update (Optional): The amount of time to wait for the subnet to be updated. Defaults to 10 minutes.  
-  timeout\_delete (Optional): The amount of time to wait for the subnet to be deleted. Defaults to 10 minutes.
+  timeout\_create (Optional): The amount of time to wait for the subnet to be created. Omitting this attribute will cause the resource to use the default duration of vcn\_timeout\_create variable.  
+  timeout\_update (Optional): The amount of time to wait for the subnet to be updated. Omitting this attribute will cause the resource to use the default duration of vcn\_timeout\_update variable.  
+  timeout\_delete (Optional): The amount of time to wait for the subnet to be deleted. Omitting this attribute will cause the resource to use the default duration of vcn\_timeout\_delete variable.
 
   COMMON
 
@@ -217,7 +217,7 @@ map(object({
     internet_ingress_disabled  = optional(bool, true)
     public_ip_on_vnic_disabled = optional(bool, true)
     route_table_id             = optional(string)
-    security_list_ids          = optional(list(string), [])
+    security_list_ids          = optional(list(string))
   }))
 ```
 
