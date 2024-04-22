@@ -52,6 +52,40 @@ module "terratest-network-vcn" {
   vcn_freeform_tags = {
     "Terraform" = "True"
   }
+
+  vcn_subnets = {
+    subnet1 = {
+      #Timeouts
+      timeout_create = "5m"
+      timeout_update = "5m"
+      timeout_delete = "5m"
+
+      #Common
+      compartment_id = local.compartment_id
+      display_name   = "terratest-subnet1"
+      # defined_tags   = {}
+      freeform_tags  = {
+        "deployment_mode" = "terraform"
+      }
+
+      #Config
+      # availability_domain        = ""
+      cidr_block                 = "172.20.0.0/24"
+      # dhcp_options_id            = ""
+      dns_label                  = "test"
+      # internet_ingress_disabled  = false
+      # public_ip_on_vnic_disabled = false
+      # route_table_id             = ""
+      # security_list_ids          = []
+    }
+
+    subnet2 = {
+      cidr_block = "172.20.1.0/24"
+    }
+    subnet3 = {
+      cidr_block = "172.20.2.0/24"
+    }
+  }
 }
 ```
 
@@ -59,6 +93,7 @@ module "terratest-network-vcn" {
 
 The following resources are used by this module:
 
+- [oci_core_subnet.subnet](https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_subnet) (resource)
 - [oci_core_vcn.vcn](https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_vcn) (resource)
 
 ## Required Inputs
@@ -116,6 +151,101 @@ Description: Free-form tags for this resource. Each tag is a simple key-value pa
 Type: `map(string)`
 
 Default: `{}`
+
+### <a name="input_vcn_internet_ingress_disabled"></a> [vcn\_internet\_ingress\_disabled](#input\_vcn\_internet\_ingress\_disabled)
+
+Description: Whether the VCN has internet ingress disabled. Defaults to true.
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_vcn_public_ip_on_vnic_disabled"></a> [vcn\_public\_ip\_on\_vnic\_disabled](#input\_vcn\_public\_ip\_on\_vnic\_disabled)
+
+Description: Whether the VCN has public IP on VNIC disabled. Defaults to true.
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_vcn_subnets"></a> [vcn\_subnets](#input\_vcn\_subnets)
+
+Description:   A map of subnets to be created on the VCN. The vcn\_subnets supports the following:
+
+  TIMEOUTS
+
+  timeout\_create (Optional): The amount of time to wait for the subnet to be created. Defaults to 10 minutes.  
+  timeout\_update (Optional): The amount of time to wait for the subnet to be updated. Defaults to 10 minutes.  
+  timeout\_delete (Optional): The amount of time to wait for the subnet to be deleted. Defaults to 10 minutes.
+
+  COMMON
+
+  compartment\_id (Optional): The OCID of the compartment in which to create the subnet. The subnet inherits the compartment ID from the VCN if you don't provide a value.  
+  display\_name (Optional): A user-friendly name. Does not have to be unique, and it's changeable.  
+  defined\_tags (Optional): Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  
+  freeform\_tags (Optional): Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.
+
+  CONFIG
+
+  availability\_domain (Optional): The Availability Domain in which the subnet will be created. Omitting this attribute will create a regional subnet.  
+  cidr\_block (Required): The CIDR block of the subnet.  
+  dhcp\_options\_id (Optional): The OCID of the set of DHCP options the subnet will use. If you don't provide a value, the subnet will use the VCN's default set of DHCP options.  
+  dns\_label (Optional): A DNS label for the subnet, used in conjunction with the VNIC's hostname and VCN's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, bminstance1.subnet123.vcn1.oraclevcn.com). Must be an alphanumeric string that begins with a letter. The value cannot be changed. Omitting this will use the dns label of the VCN.  
+  internet\_ingress\_disabled (Optional): Whether the subnet has internet ingress disabled. Defaults to true.  
+  public\_ip\_on\_vnic\_disabled (Optional): Whether the subnet has public IP on VNIC disabled. Defaults to true.  
+  route\_table\_id (Optional): The OCID of the route table the subnet will use. If you don't provide a value, the subnet will use the VCN's default route table.  
+  security\_list\_ids (Optional): The OCIDs of the security lists the subnet will use. If you don't provide any security list OCIDs, the subnet will use the VCN's default security list. Remember that security lists are associated with the subnet, but the rules are applied to the individual VNICs in the subnet.
+
+Type:
+
+```hcl
+map(object({
+    #Timeouts
+    timeout_create = optional(string)
+    timeout_update = optional(string)
+    timeout_delete = optional(string)
+    #Common
+    compartment_id = optional(string)
+    display_name   = optional(string)
+    defined_tags   = optional(map(string))
+    freeform_tags  = optional(map(string))
+    #Config
+    availability_domain        = optional(string)
+    cidr_block                 = string
+    dhcp_options_id            = optional(string)
+    dns_label                  = optional(string)
+    internet_ingress_disabled  = optional(bool, true)
+    public_ip_on_vnic_disabled = optional(bool, true)
+    route_table_id             = optional(string)
+    security_list_ids          = optional(list(string), [])
+  }))
+```
+
+Default: `{}`
+
+### <a name="input_vcn_timeout_create"></a> [vcn\_timeout\_create](#input\_vcn\_timeout\_create)
+
+Description: The amount of time to wait for the VCN to be created. Defaults to 10 minutes.
+
+Type: `string`
+
+Default: `"10m"`
+
+### <a name="input_vcn_timeout_delete"></a> [vcn\_timeout\_delete](#input\_vcn\_timeout\_delete)
+
+Description: The amount of time to wait for the VCN to be deleted. Defaults to 10 minutes.
+
+Type: `string`
+
+Default: `"10m"`
+
+### <a name="input_vcn_timeout_update"></a> [vcn\_timeout\_update](#input\_vcn\_timeout\_update)
+
+Description: The amount of time to wait for the VCN to be updated. Defaults to 10 minutes.
+
+Type: `string`
+
+Default: `"10m"`
 
 ## Outputs
 
