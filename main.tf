@@ -45,7 +45,7 @@ resource "oci_core_subnet" "subnet" {
   availability_domain        = each.value.availability_domain
   cidr_block                 = each.value.cidr_block
   dhcp_options_id            = each.value.dhcp_options_id
-  dns_label                  = coalesce(each.value.dns_label, oci_core_vcn.vcn.dns_label)
+  dns_label                  = each.value.dns_label
   prohibit_internet_ingress  = coalesce(each.value.internet_ingress_disabled, var.vcn_internet_ingress_disabled)
   prohibit_public_ip_on_vnic = coalesce(each.value.public_ip_on_vnic_disabled, var.vcn_public_ip_on_vnic_disabled)
   route_table_id             = each.value.route_table_id #!!!!
