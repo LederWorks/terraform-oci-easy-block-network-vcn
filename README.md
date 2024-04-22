@@ -249,7 +249,11 @@ Default: `"10m"`
 
 ## Outputs
 
-No outputs.
+The following outputs are exported:
+
+### <a name="output_subnets"></a> [subnets](#output\_subnets)
+
+Description: A map of all the subnets managed by this module.
 
 <!-- markdownlint-disable-file MD033 MD012 -->
 ## Contributing
