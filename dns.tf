@@ -1,6 +1,6 @@
 check "vcn_state" {
   data "oci_core_vcn" "vcn" {
-    depends_on = [oci_core_vcn.vcn]
+    # depends_on = [oci_core_vcn.vcn]
     vcn_id     = oci_core_vcn.vcn.id
   }
 
