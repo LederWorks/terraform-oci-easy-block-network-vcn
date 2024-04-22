@@ -117,3 +117,36 @@ variable "vcn_subnets" {
   
   EOT
 }
+
+#DNS
+variable "vcn_dns_display_name" {
+  type = string
+  default = null
+  description = "(Optional) (Updatable) The display name of the resolver."
+}
+
+variable "vcn_dns_private_scope_enabled" {
+  type = bool
+  default = true
+  description = "(Optional) Whether to create private or public DNS resolvers. Defaults to true."
+}
+
+variable "vcn_dns_attached_view_ids" {
+  type = map(string)
+  default = {}
+  description = "(Optional) (Updatable) The attached views OCIDs. Views are evaluated in order."
+}
+
+variable "vcn_dns_rules" {
+  type = map(object({
+    action = string  #FORWARD ???
+    source_addresses = optional(set(string))
+    destination_addresses = set(string)
+    domain_names = optional(set(string))
+    source_endpoint_name = string
+  }))
+  default = {}
+  description = <<EOT
+
+  EOT
+}
