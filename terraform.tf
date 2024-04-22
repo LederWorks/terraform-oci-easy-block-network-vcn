@@ -9,14 +9,9 @@ terraform {
       version = ">= 3.60.0"
     }
 
-    azapi = {
-      source  = "azure/azapi"
-      version = ">= 1.0.0"
-    }
-
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = ">= 2.11.0"
+    oci = {
+      source  = "oracle/oci"
+      version = ">= 5.0.0"
     }
   }
 }
