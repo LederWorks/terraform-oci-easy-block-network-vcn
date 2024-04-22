@@ -1,4 +1,4 @@
-name: Terratest - terraform-provider-easy-brick-category-purpose
+name: Terratest - terraform-oci-easy-block-network-vcn
 
 on:
   - pull_request
