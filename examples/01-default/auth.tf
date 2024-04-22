@@ -7,8 +7,8 @@ provider "azurerm" {
   }
 }
 
-# provider "oci" {
-# }
+provider "oci" {
+}
 
 #Versions
 terraform {
