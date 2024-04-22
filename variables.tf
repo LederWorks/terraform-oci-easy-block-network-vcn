@@ -116,36 +116,56 @@ variable "vcn_subnets" {
   security_list_ids (Optional): The OCIDs of the security lists the subnet will use. If you don't provide any security list OCIDs, the subnet will use the VCN's default security list. Remember that security lists are associated with the subnet, but the rules are applied to the individual VNICs in the subnet.
   
   EOT
+  #Validation that dns_label must be unique
 }
 
 #DNS
 variable "vcn_dns_display_name" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "(Optional) (Updatable) The display name of the resolver."
 }
 
 variable "vcn_dns_private_scope_enabled" {
-  type = bool
-  default = true
+  type        = bool
+  default     = true
   description = "(Optional) Whether to create private or public DNS resolvers. Defaults to true."
 }
 
 variable "vcn_dns_attached_view_ids" {
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
   description = "(Optional) (Updatable) The attached views OCIDs. Views are evaluated in order."
 }
 
+variable "vcn_dns_endpoints" {
+  type = map(object({
+    name               = string
+    subnet_id          = string
+    forwarding_enabled = optional(bool, false)
+    listening_enabled  = optional(bool, true)
+    endpoint_type      = optional(string)
+    forwarding_address = optional(string)
+    listening_address  = optional(string)
+    nsg_ids            = optional(set(string))
+  }))
+  default     = {}
+  description = <<EOT
+  (Optional) (Updatable) The list of DNS resolver endpoints. The maximum number of endpoints allowed is 3. The maximum number of NSGs per endpoint is 5.
+
+  EOT
+}
+
+
 variable "vcn_dns_rules" {
   type = map(object({
-    action = string  #FORWARD ???
-    source_addresses = optional(set(string))
+    action                = string #FORWARD ???
+    source_addresses      = optional(set(string))
     destination_addresses = set(string)
-    domain_names = optional(set(string))
-    source_endpoint_name = string
+    domain_names          = optional(set(string))
+    source_endpoint_name  = string
   }))
-  default = {}
+  default     = {}
   description = <<EOT
 
   EOT
