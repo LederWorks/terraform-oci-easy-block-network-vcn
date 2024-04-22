@@ -40,7 +40,7 @@ The following providers are used by this module:
 ```hcl
 # Module Test
 module "terratest-network-vcn" {
-  source = "../"
+  source = "../../"
 
   vcn_compartment_id = local.compartment_id
   vcn_display_name   = "terratest-vcn"
