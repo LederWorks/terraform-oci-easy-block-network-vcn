@@ -85,7 +85,7 @@ variable "vcn_subnets" {
     internet_ingress_disabled  = optional(bool, true)
     public_ip_on_vnic_disabled = optional(bool, true)
     route_table_id             = optional(string)
-    security_list_ids          = optional(list(string), [])
+    security_list_ids          = optional(list(string))
   }))
   default     = {}
   description = <<EOT
@@ -93,9 +93,9 @@ variable "vcn_subnets" {
 
   TIMEOUTS
 
-  timeout_create (Optional): The amount of time to wait for the subnet to be created. Defaults to 10 minutes.
-  timeout_update (Optional): The amount of time to wait for the subnet to be updated. Defaults to 10 minutes.
-  timeout_delete (Optional): The amount of time to wait for the subnet to be deleted. Defaults to 10 minutes.
+  timeout_create (Optional): The amount of time to wait for the subnet to be created. Omitting this attribute will cause the resource to use the default duration of vcn_timeout_create variable.
+  timeout_update (Optional): The amount of time to wait for the subnet to be updated. Omitting this attribute will cause the resource to use the default duration of vcn_timeout_update variable.
+  timeout_delete (Optional): The amount of time to wait for the subnet to be deleted. Omitting this attribute will cause the resource to use the default duration of vcn_timeout_delete variable.
 
   COMMON
 
