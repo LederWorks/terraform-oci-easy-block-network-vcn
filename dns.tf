@@ -11,7 +11,7 @@ check "vcn_state" {
 }
 
 data "oci_core_vcn_dns_resolver_association" "dns" {
-  depends_on = [check.vcn_state]
+  depends_on = [data.oci_core_vcn.vcn]
   vcn_id     = oci_core_vcn.vcn.id
 }
 
