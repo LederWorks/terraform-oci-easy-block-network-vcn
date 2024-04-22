@@ -1,11 +1,4 @@
 #Common
-variable "context" {
-  type = any
-  default = null
-  description = "(Optional) Terraform Context module."
-}
-
-#General
 variable "vcn_compartment_id" {
   type        = string
   description = "The OCID of the compartment in which to create the VCN."
