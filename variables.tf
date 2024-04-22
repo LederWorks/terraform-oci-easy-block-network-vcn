@@ -1,12 +1,26 @@
 #Common
+variable "context" {
+  type = any
+  default = null
+  description = "(Optional) Terraform Context module."
+}
+
+#General
 variable "vcn_compartment_id" {
   type        = string
   description = "The OCID of the compartment in which to create the VCN."
 }
 
+variable "vcn_name_suffix" {
+  type = string
+  default = null
+  description = "(Optional) Required when var.context is declared. Exclusive to vcn_display_name. The suffix to append to the VCN name."
+}
+
 variable "vcn_display_name" {
   type        = string
-  description = "A user-friendly name. Does not have to be unique, and it's changeable."
+  default = null
+  description = "(Optional) Updatable when var.context is omited. Exclusive to vcn_name_suffix. A user-friendly name. Does not have to be unique, and it's changeable."
 }
 
 #Tags
@@ -120,10 +134,15 @@ variable "vcn_subnets" {
 }
 
 #DNS
+variable "vcn_dns_name_suffix" {
+  type        = string
+  default     = null
+  description = "(Optional) Required when var.context is declared. Exclusive to vcn_dns_display_name. The suffix to append to the DNS Resolver name."
+}
 variable "vcn_dns_display_name" {
   type        = string
   default     = null
-  description = "(Optional) (Updatable) The display name of the resolver."
+  description = "(Optional) Updatable when var.context is omited. Exclusive to vcn_dns_name_suffix. The display name of the resolver."
 }
 
 variable "vcn_dns_private_scope_enabled" {

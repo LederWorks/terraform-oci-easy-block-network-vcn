@@ -13,9 +13,9 @@ resource "oci_core_vcn" "vcn" {
 
   #Common
   compartment_id = var.vcn_compartment_id
-  display_name   = var.vcn_display_name
-  defined_tags   = var.vcn_defined_tags
-  freeform_tags  = var.vcn_freeform_tags
+  display_name   = var.context != null ? local.vcn_name : var.vcn_display_name
+  defined_tags   = local.defined_tags
+  freeform_tags  = local.freeform_tags
 
   #Config
   cidr_blocks = var.vcn_cidr_blocks

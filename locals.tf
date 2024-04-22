@@ -2,15 +2,20 @@ locals {
   #Tags
   freeform_tags = merge(
     var.vcn_freeform_tags,
-    {}
+    {},
+    var.context != null ? var.context.oci_freeform_tags : {}
   )
 
   defined_tags = merge(
     var.vcn_defined_tags,
-    {}
+    {},
+    var.context != null ? var.context.oci_defined_tags : {}
   )
 
   #VCN
+  vcn_shortname = "vnet"
+  vcn_name = var.context != null ? lower("${local.vcn_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${var.vcn_name_suffix}") : null
+
   vcn = {
     ocid             = oci_core_vcn.vcn.id,
     state            = oci_core_vcn.vcn.state,
@@ -27,6 +32,11 @@ locals {
   }
 
   #Subnets
+  subnet_shortname = "snet"
+  subnet_names = var.context != null ? { for subnet_key, subnet in var.vcn_subnets :
+    subnet_key => lower("${local.subnet_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${subnet.name_suffix}")
+  } : {}
+
   subnets = {
     for subnet_key, subnet in oci_core_subnet.subnet :
     "${subnet_key}" => {
@@ -49,6 +59,9 @@ locals {
   }
 
   #DNS Resolver
+  dns_resolver_shortname = "dnsr"
+  dns_resolver_name = var.context != null ? lower("${local.dns_resolver_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${var.vcn_dns_name_suffix}") : null
+
   dns_resolver = {
     ocid            = oci_dns_resolver.dns.id,
     self            = oci_dns_resolver.dns.self,
@@ -66,4 +79,28 @@ locals {
     freeform_tags   = oci_dns_resolver.dns.freeform_tags,
   }
 
+  #DNS Resolver Endpoints
+  dns_endpoint_shortname = "dnse"
+  dns_endpoint_names = var.context != null ? { for endpoint_key, endpoint in var.vcn_dns_endpoints :
+    endpoint_key => lower("${local.dns_endpoint_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${endpoint.name_suffix}")
+  } : {}
+
+  dns_endpoints = {
+    for endpoint_key, endpoint in oci_dns_resolver_endpoint.dns :
+    "${endpoint_key}" => {
+      ocid            = endpoint.id,
+      self            = endpoint.self,
+      state           = endpoint.state,
+      name            = endpoint.name,
+      endpoint_type   = endpoint.endpoint_type,
+      compartment_id  = endpoint.compartment_id,
+      resolver_id     = endpoint.resolver_id,
+      subnet_id       = endpoint.subnet_id,
+      scope           = endpoint.scope,
+      is_forwarding   = endpoint.is_forwarding,
+      forwarding_address = endpoint.forwarding_address,
+      is_listening    = endpoint.is_listening,
+      listening_address  = endpoint.listening_address,
+    }
+  }
 }
