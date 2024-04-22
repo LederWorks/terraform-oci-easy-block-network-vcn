@@ -22,7 +22,7 @@ func TestTerraform(t *testing.T) {
 			"subscription_id":      os.Getenv("ARM_SUBSCRIPTION_ID"),
 			"resource_group_name":  "rgrp-pde3-it-terratest", // os.Getenv("AZURERM_BACKEND_RGRP"),
 			"storage_account_name": "saccpde3itterratest001", // os.Getenv("AZURERM_BACKEND_SACC"),
-			"container_name":       "terratest-oci",      // os.Getenv("AZURERM_BACKEND_CONTAINER"),
+			"container_name":       "terratest-oci",          // os.Getenv("AZURERM_BACKEND_CONTAINER"),
 			"key":                  "easy-block-network-vcn.default.tfstate",
 			"snapshot":             "true",
 			"use_azuread_auth":     "true",
