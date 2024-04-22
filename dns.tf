@@ -17,7 +17,6 @@ data "oci_core_vcn_dns_resolver_association" "dns" {
       error_message = "The VCN must be in the AVAILABLE state to fetch its DNS resolver association data."
     }
   }
-  
   vcn_id     = oci_core_vcn.vcn.id
 }
 
