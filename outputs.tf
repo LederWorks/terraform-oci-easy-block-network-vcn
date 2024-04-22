@@ -1,11 +1,10 @@
-################################ Outputs
-################################ auth
-# output "purpose_tenant_id" {
-#   value = data.azurerm_client_config.current.tenant_id
+#VCN
+# output "name" {
+  
 # }
-# output "purpose_subscription_id" {
-#   value = data.azurerm_client_config.current.subscription_id
-# }
-# output "purpose_releaser" {
-#   value = data.azurerm_client_config.current.client_id
-# }
+
+#Subnets
+output "subnets" {
+  value = local.subnet_list
+  description = "A map of all the subnets managed by this module."
+}
