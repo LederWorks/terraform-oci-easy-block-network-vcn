@@ -95,6 +95,8 @@ The following resources are used by this module:
 
 - [oci_core_subnet.subnet](https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_subnet) (resource)
 - [oci_core_vcn.vcn](https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_vcn) (resource)
+- [oci_dns_resolver.dns](https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/dns_resolver) (resource)
+- [oci_dns_resolver_endpoint.dns](https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/dns_resolver_endpoint) (resource)
 
 ## Required Inputs
 
@@ -141,6 +143,69 @@ Default: `null`
 Description: Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 
 Type: `map(string)`
+
+Default: `{}`
+
+### <a name="input_vcn_dns_attached_view_ids"></a> [vcn\_dns\_attached\_view\_ids](#input\_vcn\_dns\_attached\_view\_ids)
+
+Description: (Optional) (Updatable) The attached views OCIDs. Views are evaluated in order.
+
+Type: `map(string)`
+
+Default: `{}`
+
+### <a name="input_vcn_dns_display_name"></a> [vcn\_dns\_display\_name](#input\_vcn\_dns\_display\_name)
+
+Description: (Optional) (Updatable) The display name of the resolver.
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_vcn_dns_endpoints"></a> [vcn\_dns\_endpoints](#input\_vcn\_dns\_endpoints)
+
+Description:   (Optional) (Updatable) The list of DNS resolver endpoints. The maximum number of endpoints allowed is 3. The maximum number of NSGs per endpoint is 5.
+
+Type:
+
+```hcl
+map(object({
+    name               = string
+    subnet_id          = string
+    forwarding_enabled = optional(bool, false)
+    listening_enabled  = optional(bool, true)
+    endpoint_type      = optional(string)
+    forwarding_address = optional(string)
+    listening_address  = optional(string)
+    nsg_ids            = optional(set(string))
+  }))
+```
+
+Default: `{}`
+
+### <a name="input_vcn_dns_private_scope_enabled"></a> [vcn\_dns\_private\_scope\_enabled](#input\_vcn\_dns\_private\_scope\_enabled)
+
+Description: (Optional) Whether to create private or public DNS resolvers. Defaults to true.
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_vcn_dns_rules"></a> [vcn\_dns\_rules](#input\_vcn\_dns\_rules)
+
+Description:
+
+Type:
+
+```hcl
+map(object({
+    action                = string #FORWARD ???
+    source_addresses      = optional(set(string))
+    destination_addresses = set(string)
+    domain_names          = optional(set(string))
+    source_endpoint_name  = string
+  }))
+```
 
 Default: `{}`
 
@@ -251,9 +316,17 @@ Default: `"10m"`
 
 The following outputs are exported:
 
+### <a name="output_dns_resolver"></a> [dns\_resolver](#output\_dns\_resolver)
+
+Description: The DNS Resolver managed by this module.
+
 ### <a name="output_subnets"></a> [subnets](#output\_subnets)
 
 Description: A map of all the subnets managed by this module.
+
+### <a name="output_vcn"></a> [vcn](#output\_vcn)
+
+Description: The VCN managed by this module.
 
 <!-- markdownlint-disable-file MD033 MD012 -->
 ## Contributing
