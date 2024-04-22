@@ -12,8 +12,8 @@ locals {
 
   #Subnets
   subnet_list = {
-    for subnet in oci_core_subnet.subnet :
-    subnet.key => {
+    for subnet_key, subnet in oci_core_subnet.subnet :
+    "${subnet_key}" => {
       ocid              = subnet.id,
       state             = subnet.state,
       cidr_block        = subnet.cidr_block,
