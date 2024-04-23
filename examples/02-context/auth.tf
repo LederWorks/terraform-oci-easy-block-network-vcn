@@ -7,6 +7,9 @@ provider "azurerm" {
   }
 }
 
+provider "azapi" {
+}
+
 provider "oci" {
   tenancy_ocid = var.TENANCY_OCID
   user_ocid    = var.USER_OCID
@@ -17,11 +20,15 @@ provider "oci" {
 
 #Versions
 terraform {
-  required_version = ">=1.3.6"
+  required_version = ">= 1.6.0"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "3.100.0"
+    }
+    azapi = {
+      source  = "azure/azapi"
+      version = ">= 1.9.0"
     }
     oci = {
       source  = "oracle/oci"
@@ -36,7 +43,7 @@ terraform {
     resource_group_name  = "rgrp-pde3-it-terratest"
     storage_account_name = "saccpde3itterratest001"
     container_name       = "terratest-github"
-    key                  = "easy-block-network-vcn.default.tfstate"
+    key                  = "easy-block-network-vcn.context.tfstate"
     snapshot             = true
     use_azuread_auth     = true
   }

@@ -1,3 +1,9 @@
+#Context
+output "context" {
+  value       = module.context.context
+  description = "Context"
+}
+
 #VCN
 output "vcn" {
   value = module.terratest-network-vcn.vcn

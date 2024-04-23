@@ -1,4 +1,4 @@
-module github.com/LederWorks/terraform-oci-easy-block-network-vnet/.test/01-default
+module github.com/LederWorks/terraform-oci-easy-block-network-vnet/.test/02-context
 
 go 1.20
 

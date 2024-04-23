@@ -1,16 +1,23 @@
 # Change Log
 
-## v0.3.1 [current]
-BUG FIXES:
-- Updated copyright to 2024
-
-## v0.3.0
+## v0.2.0 [current]
 FEATURES:
-- Added pull request template
+- Added VCN support
+- Added subnet support
+- Added DNS Resolver support
+- Added DNS Resolver Endpoint support
+- Added DHCP Options support
+- Added Route Table support
+- Added Security List support
+- Added support for a context module
 
 ENHANCEMENTS:
-- Separated tests and examples
-- Updated default version constrains
+- Improved dns label validation for vcn_subnets variable
+- When using context module names are generated with the vcn_name_suffix, vcn_subnets.name_suffix, vcn_dns_name_suffix and vcn_dns_endpoints.name_suffix inputs
 
 BUG FIXES:
-- Removed Azure DevOps pull request template
+- Added vcn_dns_manage variable with default false value, so the initial run not failing on the resolver not available yet.
+
+## v0.1.0
+FEATURES:
+- Initial version
