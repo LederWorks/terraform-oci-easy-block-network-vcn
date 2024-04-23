@@ -1,11 +1,13 @@
 #Subnets
 locals {
+  #Naming
   subnet_shortname = "snet"
 
   subnet_names = var.context != null ? { for subnet_key, subnet in var.vcn_subnets :
     subnet_key => lower("${local.subnet_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${subnet.name_suffix}")
   } : {}
 
+  #Output
   subnets = {
     for subnet_key, subnet in oci_core_subnet.subnet :
     "${subnet_key}" => {
@@ -28,6 +30,7 @@ locals {
   }
 }
 
+#Resource
 resource "oci_core_subnet" "subnet" {
   for_each = var.vcn_subnets != {} ? var.vcn_subnets : {}
 
@@ -55,6 +58,6 @@ resource "oci_core_subnet" "subnet" {
 
   #Attachments
   dhcp_options_id   = each.value.dhcp_options_id
-  route_table_id    = each.value.route_table_id #!!!!
+  route_table_id    = coalesce(each.value.route_table_id, vcn_route_table_id)
   security_list_ids = length(concat(each.value.security_list_ids, var.vcn_security_list_ids)) > 0 ? concat(each.value.security_list_ids, var.vcn_security_list_ids) : null
 }

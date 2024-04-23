@@ -90,16 +90,22 @@ variable "vcn_public_ip_on_vnic_disabled" {
   default     = true
 }
 
-variable "vcn_security_list_ids" {
-  type = list(string)
-  description = "(Optional) The OCIDs of the security lists the Subnets will use. If you don't provide any security list OCIDs, the VCN will use the default security list. Remember that security lists are associated with the VCN, but the rules are applied to the individual VNICs in the VCN."
-  default     = []
+variable "vcn_dhcp_options_id" {
+  type        = string
+  default     = null
+  description = "(Optional) The OCID of the set of DHCP options the VCN will use. If you don't provide a value, the VCN will use the default set of DHCP options for the VCN's region."
 }
 
 variable "vcn_route_table_id" {
   type = string
   default = null
   description = "(Optional) The OCID of the route table the Subnets will use. If you don't provide a value, the VCN will use the default route table."
+}
+
+variable "vcn_security_list_ids" {
+  type = list(string)
+  default     = []
+  description = "(Optional) The OCIDs of the security lists the Subnets will use. If you don't provide any security list OCIDs, the VCN will use the default security list. Remember that security lists are associated with the VCN, but the rules are applied to the individual VNICs in the VCN."
 }
 
 variable "vcn_subnets" {
@@ -153,15 +159,13 @@ variable "vcn_subnets" {
   security_list_ids (Optional): The OCIDs of the security lists the subnet will use. If you don't provide any security list OCIDs, the subnet will use the VCN's default security list. Remember that security lists are associated with the subnet, but the rules are applied to the individual VNICs in the subnet.
 
   EOT
+
   #Validation that dns_label must be unique across all subnets
-  # validation {
-  #   condition     = length(var.vcn_subnets) == 0 || length(distinct(values([for v in var.vcn_subnets : v.dns_label if v.dns_label != null]))) == length([for v in var.vcn_subnets : v.dns_label if v.dns_label != null])
-  #   error_message = "The dns_label must be unique across all objects in the map."
-  # }
   validation {
     condition     = length(var.vcn_subnets) == 0 || length(distinct([for subnet in var.vcn_subnets : subnet.dns_label if subnet.dns_label != null])) == length([for subnet in var.vcn_subnets : subnet.dns_label if subnet.dns_label != null])
     error_message = "The dns_label must be unique across all subnets.\n"
   }
+
 }
 
 # $$$$$$$\  $$\   $$\  $$$$$$\  
