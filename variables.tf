@@ -198,3 +198,4 @@ variable "vcn_dns_rules" {
 
   EOT
 }
+

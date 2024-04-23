@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Go
       uses: actions/setup-go@v5
@@ -28,7 +28,7 @@ jobs:
         cache-dependency-path: .test/**/*.sum
 
     - name: Install Terraform
-      uses: hashicorp/setup-terraform@v1
+      uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: 1.8.1
         terraform_wrapper: false
