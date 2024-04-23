@@ -5,7 +5,8 @@ module "context" {
   subsidiary  = "candy"
   cloud       = "oci"
   environment = "int"
-  region      = "eu-frankfurt-1"
+  # region      = "eu-frankfurt-1"
+  region  = "westeurope"
   project     = "form"
   department  = "pd"
 

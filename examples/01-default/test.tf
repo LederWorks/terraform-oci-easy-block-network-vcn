@@ -46,4 +46,6 @@ module "terratest-network-vcn" {
       cidr_block = "172.20.2.0/24"
     }
   }
+
+  vcn_dns_manage = true
 }
