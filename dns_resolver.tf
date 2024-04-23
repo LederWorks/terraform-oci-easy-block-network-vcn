@@ -40,7 +40,7 @@ resource "oci_dns_resolver" "dns" {
     ignore_changes = [defined_tags]
   }
 
-  resolver_id = data.oci_core_vcn_dns_resolver_association.dns.dns_resolver_id
+  resolver_id = data.oci_core_vcn_dns_resolver_association.dns[0].dns_resolver_id
 
   compartment_id = oci_core_vcn.vcn.compartment_id
   display_name   = var.context != null ? local.dns_resolver_name : var.vcn_dns_display_name

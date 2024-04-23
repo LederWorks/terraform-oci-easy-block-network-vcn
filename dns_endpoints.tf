@@ -31,7 +31,7 @@ resource "oci_dns_resolver_endpoint" "dns" {
   for_each = var.vcn_dns_endpoints != {} && var.vcn_dns_manage ? var.vcn_dns_endpoints : {}
 
   name          = each.value.name
-  resolver_id   = oci_dns_resolver.dns.id
+  resolver_id   = oci_dns_resolver.dns[0].id
   subnet_id     = each.value.subnet_id
   scope         = var.vcn_dns_private_scope_enabled ? "PRIVATE" : null
   is_forwarding = each.value.forwarding_enabled
