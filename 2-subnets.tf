@@ -56,5 +56,5 @@ resource "oci_core_subnet" "subnet" {
   #Attachments
   dhcp_options_id   = each.value.dhcp_options_id
   route_table_id    = each.value.route_table_id #!!!!
-  security_list_ids = concat(each.value.security_list_ids, var.vcn_security_list_ids)
+  security_list_ids = length(concat(each.value.security_list_ids, var.vcn_security_list_ids)) > 0 ? concat(each.value.security_list_ids, var.vcn_security_list_ids) : null
 }
