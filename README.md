@@ -92,9 +92,9 @@ module "terratest-network-vcn" {
 
 ### Example 2 - VCN and Subnet setup with a context module
 
-```hcl
+ ```hcl
 module "context" {
-  source = "git::https://github.com/LederWorks/terraform-generic-easy-context.git?ref=0.5.1"
+  source = "git::https://github.com/LederWorks/terraform-generic-easy-context.git?ref=v0.6"
 
   subsidiary  = "candy"
   cloud       = "oci"
@@ -194,7 +194,7 @@ Type: `list(string)`
 
 ### <a name="input_vcn_compartment_id"></a> [vcn\_compartment\_id](#input\_vcn\_compartment\_id)
 
-Description: The OCID of the compartment in which to create the VCN.
+Description: (Required) The OCID of the compartment in which to create the VCN.
 
 Type: `string`
 
@@ -218,11 +218,19 @@ Default: `null`
 
 ### <a name="input_vcn_defined_tags"></a> [vcn\_defined\_tags](#input\_vcn\_defined\_tags)
 
-Description: Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
+Description: (Optional) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 
 Type: `map(string)`
 
 Default: `{}`
+
+### <a name="input_vcn_dhcp_options_id"></a> [vcn\_dhcp\_options\_id](#input\_vcn\_dhcp\_options\_id)
+
+Description: (Optional) The OCID of the set of DHCP options the VCN will use. If you don't provide a value, the VCN will use the default set of DHCP options for the VCN's region.
+
+Type: `string`
+
+Default: `null`
 
 ### <a name="input_vcn_display_name"></a> [vcn\_display\_name](#input\_vcn\_display\_name)
 
@@ -314,7 +322,7 @@ Default: `{}`
 
 ### <a name="input_vcn_freeform_tags"></a> [vcn\_freeform\_tags](#input\_vcn\_freeform\_tags)
 
-Description: Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.
+Description: (Optional) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.
 
 Type: `map(string)`
 
@@ -322,7 +330,7 @@ Default: `{}`
 
 ### <a name="input_vcn_internet_ingress_disabled"></a> [vcn\_internet\_ingress\_disabled](#input\_vcn\_internet\_ingress\_disabled)
 
-Description: Whether the VCN has internet ingress disabled. Defaults to true.
+Description: (Optional) Whether the Subnets has internet ingress disabled. Defaults to true.
 
 Type: `bool`
 
@@ -338,7 +346,7 @@ Default: `null`
 
 ### <a name="input_vcn_public_ip_on_vnic_disabled"></a> [vcn\_public\_ip\_on\_vnic\_disabled](#input\_vcn\_public\_ip\_on\_vnic\_disabled)
 
-Description: Whether the VCN has public IP on VNIC disabled. Defaults to true.
+Description: (Optional) Whether the Subnets has public IP on VNIC disabled. Defaults to true.
 
 Type: `bool`
 
@@ -346,7 +354,7 @@ Default: `true`
 
 ### <a name="input_vcn_route_table_id"></a> [vcn\_route\_table\_id](#input\_vcn\_route\_table\_id)
 
-Description: value
+Description: (Optional) The OCID of the route table the Subnets will use. If you don't provide a value, the VCN will use the default route table.
 
 Type: `string`
 
@@ -354,9 +362,9 @@ Default: `null`
 
 ### <a name="input_vcn_security_list_ids"></a> [vcn\_security\_list\_ids](#input\_vcn\_security\_list\_ids)
 
-Description: The OCIDs of the security lists the VCN will use. If you don't provide any security list OCIDs, the VCN will use the default security list. Remember that security lists are associated with the VCN, but the rules are applied to the individual VNICs in the VCN.
+Description: (Optional) The OCIDs of the security lists the Subnets will use. If you don't provide any security list OCIDs, the VCN will use the default security list. Remember that security lists are associated with the VCN, but the rules are applied to the individual VNICs in the VCN.
 
-Type: `set(string)`
+Type: `list(string)`
 
 Default: `[]`
 
@@ -410,7 +418,7 @@ map(object({
     internet_ingress_disabled  = optional(bool)
     public_ip_on_vnic_disabled = optional(bool)
     route_table_id             = optional(string)
-    security_list_ids          = optional(list(string))
+    security_list_ids          = optional(list(string), [])
   }))
 ```
 
@@ -418,7 +426,7 @@ Default: `{}`
 
 ### <a name="input_vcn_timeout_create"></a> [vcn\_timeout\_create](#input\_vcn\_timeout\_create)
 
-Description: The amount of time to wait for the VCN to be created. Defaults to 10 minutes.
+Description: (Optional) The amount of time to wait for the VCN to be created. Defaults to 10 minutes.
 
 Type: `string`
 
@@ -426,7 +434,7 @@ Default: `"10m"`
 
 ### <a name="input_vcn_timeout_delete"></a> [vcn\_timeout\_delete](#input\_vcn\_timeout\_delete)
 
-Description: The amount of time to wait for the VCN to be deleted. Defaults to 10 minutes.
+Description: (Optional) The amount of time to wait for the VCN to be deleted. Defaults to 10 minutes.
 
 Type: `string`
 
@@ -434,7 +442,7 @@ Default: `"10m"`
 
 ### <a name="input_vcn_timeout_update"></a> [vcn\_timeout\_update](#input\_vcn\_timeout\_update)
 
-Description: The amount of time to wait for the VCN to be updated. Defaults to 10 minutes.
+Description: (Optional) The amount of time to wait for the VCN to be updated. Defaults to 10 minutes.
 
 Type: `string`
 
