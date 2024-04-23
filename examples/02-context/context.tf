@@ -18,4 +18,8 @@ module "context" {
   custom_tags = {
     poc = "vcn"
   }
+
+  #Regions
+  azure_regions = module.azure_regions.regions
+  oci_regions   = data.oci_identity_regions.regions.regions
 }

@@ -7,6 +7,9 @@ provider "azurerm" {
   }
 }
 
+provider "azapi" {
+}
+
 provider "oci" {
   tenancy_ocid = var.TENANCY_OCID
   user_ocid    = var.USER_OCID
@@ -22,6 +25,10 @@ terraform {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "3.100.0"
+    }
+    azapi = {
+      source  = "azure/azapi"
+      version = ">= 1.9.0"
     }
     oci = {
       source  = "oracle/oci"
