@@ -1,6 +1,7 @@
-#VCN
+#Virtual Cloud Network
 locals {
   vcn_shortname = "vnet"
+
   vcn_name      = var.context != null ? lower("${local.vcn_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${var.vcn_name_suffix}") : null
 
   vcn = {
@@ -19,6 +20,7 @@ locals {
   }
 }
 
+#VCN Resource
 resource "oci_core_vcn" "vcn" {
   lifecycle {
     ignore_changes = [defined_tags]
@@ -45,7 +47,6 @@ resource "oci_core_vcn" "vcn" {
 #Check VCN AVAILABLE state
 check "vcn_state" {
   data "oci_core_vcn" "vcn" {
-    # depends_on = [oci_core_vcn.vcn]
     vcn_id = oci_core_vcn.vcn.id
   }
 

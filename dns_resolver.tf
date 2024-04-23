@@ -1,9 +1,9 @@
 #DNS Resolver
 locals {
   dns_resolver_shortname = "dnsr"
-  dns_resolver_name      = var.context != null ? lower("${local.dns_resolver_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${var.vcn_dns_name_suffix}") : null
+  dns_resolver_name      = var.context != null && var.vcn_dns_manage ? lower("${local.dns_resolver_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${var.vcn_dns_name_suffix}") : null
 
-  dns_resolver = {
+  dns_resolver = var.vcn_dns_manage ? {
     ocid            = oci_dns_resolver.dns.id,
     self            = oci_dns_resolver.dns.self,
     state           = oci_dns_resolver.dns.state,
@@ -18,11 +18,12 @@ locals {
     rules           = oci_dns_resolver.dns.rules,
     defined_tags    = oci_dns_resolver.dns.defined_tags,
     freeform_tags   = oci_dns_resolver.dns.freeform_tags,
-  }
+  } : {}
 }
 
 #Data for DNS resolver ID
 data "oci_core_vcn_dns_resolver_association" "dns" {
+  count = var.vcn_dns_manage ? 1 : 0
   lifecycle {
     precondition {
       condition     = oci_core_vcn.vcn.state == "AVAILABLE"
@@ -34,6 +35,7 @@ data "oci_core_vcn_dns_resolver_association" "dns" {
 
 #DNS resolver resource
 resource "oci_dns_resolver" "dns" {
+  count = var.vcn_dns_manage ? 1 : 0
   lifecycle {
     ignore_changes = [defined_tags]
   }
