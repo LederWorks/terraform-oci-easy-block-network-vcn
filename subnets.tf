@@ -1,6 +1,7 @@
 #Subnets
 locals {
   subnet_shortname = "snet"
+
   subnet_names = var.context != null ? { for subnet_key, subnet in var.vcn_subnets :
     subnet_key => lower("${local.subnet_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${subnet.name_suffix}")
   } : {}

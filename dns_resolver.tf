@@ -1,6 +1,7 @@
 #DNS Resolver
 locals {
   dns_resolver_shortname = "dnsr"
+
   dns_resolver_name      = var.context != null && var.vcn_dns_manage ? lower("${local.dns_resolver_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${var.vcn_dns_name_suffix}") : null
 
   dns_resolver = var.vcn_dns_manage ? {
