@@ -2,7 +2,7 @@
 locals {
   vcn_shortname = "vnet"
 
-  vcn_name      = var.context != null ? lower("${local.vcn_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${var.vcn_name_suffix}") : null
+  vcn_name = var.context != null ? lower("${local.vcn_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${var.vcn_name_suffix}") : null
 
   vcn = {
     ocid             = oci_core_vcn.vcn.id,

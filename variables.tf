@@ -81,6 +81,7 @@ variable "vcn_subnets" {
     timeout_delete = optional(string)
     #Common
     compartment_id = optional(string)
+    name_suffix    = optional(string)
     display_name   = optional(string)
     defined_tags   = optional(map(string))
     freeform_tags  = optional(map(string))
@@ -128,16 +129,16 @@ variable "vcn_subnets" {
   #   condition     = length(var.vcn_subnets) == 0 || length(distinct(values([for v in var.vcn_subnets : v.dns_label if v.dns_label != null]))) == length([for v in var.vcn_subnets : v.dns_label if v.dns_label != null])
   #   error_message = "The dns_label must be unique across all objects in the map."
   # }
-  validation {  
-    condition     = length(var.vcn_subnets) == 0 || length(distinct([for subnet in var.vcn_subnets : subnet.dns_label if subnet.dns_label != null])) == length([for subnet in var.vcn_subnets : subnet.dns_label if subnet.dns_label != null])  
-    error_message = "The dns_label must be unique across all subnets.\n"  
-  }  
+  validation {
+    condition     = length(var.vcn_subnets) == 0 || length(distinct([for subnet in var.vcn_subnets : subnet.dns_label if subnet.dns_label != null])) == length([for subnet in var.vcn_subnets : subnet.dns_label if subnet.dns_label != null])
+    error_message = "The dns_label must be unique across all subnets.\n"
+  }
 }
 
 #DNS
 variable "vcn_dns_manage" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "(Optional) Whether to manage the DNS resolver with this module. Defaults to false."
 }
 
@@ -166,8 +167,9 @@ variable "vcn_dns_attached_view_ids" {
 
 variable "vcn_dns_endpoints" {
   type = map(object({
-    name               = string
     subnet_id          = string
+    name               = optional(string)
+    name_suffix        = optional(string)
     forwarding_enabled = optional(bool, false)
     listening_enabled  = optional(bool, true)
     endpoint_type      = optional(string)
