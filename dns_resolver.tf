@@ -4,20 +4,20 @@ locals {
   dns_resolver_name      = var.context != null && var.vcn_dns_manage ? lower("${local.dns_resolver_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${var.vcn_dns_name_suffix}") : null
 
   dns_resolver = var.vcn_dns_manage ? {
-    ocid            = oci_dns_resolver.dns.id,
-    self            = oci_dns_resolver.dns.self,
-    state           = oci_dns_resolver.dns.state,
-    is_protected    = oci_dns_resolver.dns.is_protected,
-    display_name    = oci_dns_resolver.dns.display_name,
-    scope           = oci_dns_resolver.dns.scope,
-    endpoints       = oci_dns_resolver.dns.endpoints,
-    attached_vcn_id = oci_dns_resolver.dns.attached_vcn_id,
-    compartment_id  = oci_dns_resolver.dns.compartment_id,
-    default_view_id = oci_dns_resolver.dns.default_view_id,
-    attached_views  = oci_dns_resolver.dns.attached_views,
-    rules           = oci_dns_resolver.dns.rules,
-    defined_tags    = oci_dns_resolver.dns.defined_tags,
-    freeform_tags   = oci_dns_resolver.dns.freeform_tags,
+    ocid            = oci_dns_resolver.dns[0].id,
+    self            = oci_dns_resolver.dns[0].self,
+    state           = oci_dns_resolver.dns[0].state,
+    is_protected    = oci_dns_resolver.dns[0].is_protected,
+    display_name    = oci_dns_resolver.dns[0].display_name,
+    scope           = oci_dns_resolver.dns[0].scope,
+    endpoints       = oci_dns_resolver.dns[0].endpoints,
+    attached_vcn_id = oci_dns_resolver.dns[0].attached_vcn_id,
+    compartment_id  = oci_dns_resolver.dns[0].compartment_id,
+    default_view_id = oci_dns_resolver.dns[0].default_view_id,
+    attached_views  = oci_dns_resolver.dns[0].attached_views,
+    rules           = oci_dns_resolver.dns[0].rules,
+    defined_tags    = oci_dns_resolver.dns[0].defined_tags,
+    freeform_tags   = oci_dns_resolver.dns[0].freeform_tags,
   } : {}
 }
 

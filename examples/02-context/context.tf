@@ -12,7 +12,7 @@ module "context" {
   tags = {
     OwnerOU      = "pd"
     OwnerContact = "contact@lederworks.com"
-    Sweetnes     = "honeypot"
+    Sweetness    = "honeypot"
   }
 
   custom_tags = {
