@@ -18,7 +18,7 @@ locals {
     rules           = oci_dns_resolver.dns[0].rules,
     defined_tags    = oci_dns_resolver.dns[0].defined_tags,
     freeform_tags   = oci_dns_resolver.dns[0].freeform_tags,
-  } : {}
+  } : null
 }
 
 #Data for DNS resolver ID

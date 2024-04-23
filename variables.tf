@@ -124,6 +124,10 @@ variable "vcn_subnets" {
 
   EOT
   #Validation that dns_label must be unique across all subnets
+  validation {
+    condition     = length(var.example_map) == 0 || length(distinct(values([for v in var.example_map : v.dns_label if v.dns_label != null]))) == length([for v in var.example_map : v.dns_label if v.dns_label != null])
+    error_message = "The dns_label must be unique across all objects in the map."
+  }
 }
 
 #DNS
