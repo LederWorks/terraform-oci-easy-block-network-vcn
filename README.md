@@ -94,7 +94,7 @@ module "terratest-network-vcn" {
 
 ```hcl
 module "context" {
-  source = "git::https://github.com/LederWorks/terraform-generic-easy-context.git?ref=889f3edbecbea306d1ee9fe67b55c15a54b6bf8a"
+  source = "git::https://github.com/LederWorks/terraform-generic-easy-context.git?ref=0.5.1"
 
   subsidiary  = "candy"
   cloud       = "oci"
@@ -344,6 +344,22 @@ Type: `bool`
 
 Default: `true`
 
+### <a name="input_vcn_route_table_id"></a> [vcn\_route\_table\_id](#input\_vcn\_route\_table\_id)
+
+Description: value
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_vcn_security_list_ids"></a> [vcn\_security\_list\_ids](#input\_vcn\_security\_list\_ids)
+
+Description: The OCIDs of the security lists the VCN will use. If you don't provide any security list OCIDs, the VCN will use the default security list. Remember that security lists are associated with the VCN, but the rules are applied to the individual VNICs in the VCN.
+
+Type: `set(string)`
+
+Default: `[]`
+
 ### <a name="input_vcn_subnets"></a> [vcn\_subnets](#input\_vcn\_subnets)
 
 Description:   A map of subnets to be created on the VCN. The vcn\_subnets supports the following:
@@ -391,8 +407,8 @@ map(object({
     cidr_block                 = string
     dhcp_options_id            = optional(string)
     dns_label                  = optional(string)
-    internet_ingress_disabled  = optional(bool, true)
-    public_ip_on_vnic_disabled = optional(bool, true)
+    internet_ingress_disabled  = optional(bool)
+    public_ip_on_vnic_disabled = optional(bool)
     route_table_id             = optional(string)
     security_list_ids          = optional(list(string))
   }))
