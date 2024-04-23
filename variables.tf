@@ -73,6 +73,18 @@ variable "vcn_public_ip_on_vnic_disabled" {
   default     = true
 }
 
+variable "vcn_security_list_ids" {
+  type = set(string)
+  description = "The OCIDs of the security lists the VCN will use. If you don't provide any security list OCIDs, the VCN will use the default security list. Remember that security lists are associated with the VCN, but the rules are applied to the individual VNICs in the VCN."
+  default     = []
+}
+
+variable "vcn_route_table_id" {
+  type = string
+  default = null
+  description = "value"
+}
+
 variable "vcn_subnets" {
   type = map(object({
     #Timeouts
@@ -90,8 +102,8 @@ variable "vcn_subnets" {
     cidr_block                 = string
     dhcp_options_id            = optional(string)
     dns_label                  = optional(string)
-    internet_ingress_disabled  = optional(bool, true)
-    public_ip_on_vnic_disabled = optional(bool, true)
+    internet_ingress_disabled  = optional(bool)
+    public_ip_on_vnic_disabled = optional(bool)
     route_table_id             = optional(string)
     security_list_ids          = optional(list(string))
   }))

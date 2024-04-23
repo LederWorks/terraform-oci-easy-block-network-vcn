@@ -1,5 +1,5 @@
 module "context" {
-  source = "git::https://github.com/LederWorks/terraform-generic-easy-context.git?ref=889f3edbecbea306d1ee9fe67b55c15a54b6bf8a"
+  source = "git::https://github.com/LederWorks/terraform-generic-easy-context.git?ref=0.5.1"
 
   subsidiary  = "candy"
   cloud       = "oci"
