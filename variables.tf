@@ -91,7 +91,7 @@ variable "vcn_public_ip_on_vnic_disabled" {
 }
 
 variable "vcn_security_list_ids" {
-  type = set(string)
+  type = list(string)
   description = "(Optional) The OCIDs of the security lists the Subnets will use. If you don't provide any security list OCIDs, the VCN will use the default security list. Remember that security lists are associated with the VCN, but the rules are applied to the individual VNICs in the VCN."
   default     = []
 }
