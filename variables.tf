@@ -121,9 +121,9 @@ variable "vcn_subnets" {
   public_ip_on_vnic_disabled (Optional): Whether the subnet has public IP on VNIC disabled. Defaults to true.
   route_table_id (Optional): The OCID of the route table the subnet will use. If you don't provide a value, the subnet will use the VCN's default route table.
   security_list_ids (Optional): The OCIDs of the security lists the subnet will use. If you don't provide any security list OCIDs, the subnet will use the VCN's default security list. Remember that security lists are associated with the subnet, but the rules are applied to the individual VNICs in the subnet.
-  
+
   EOT
-  #Validation that dns_label must be unique
+  #Validation that dns_label must be unique across all subnets
 }
 
 #DNS
