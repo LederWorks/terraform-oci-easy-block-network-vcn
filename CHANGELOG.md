@@ -2,10 +2,13 @@
 
 ## v0.2.0 [current]
 FEATURES:
-- Added vcn support
+- Added VCN support
 - Added subnet support
-- Added dns resolver support
-- Added dns endpoint support
+- Added DNS Resolver support
+- Added DNS Resolver Endpoint support
+- Added DHCP Options support
+- Added Route Table support
+- Added Security List support
 - Added support for a context module
 
 ENHANCEMENTS:

@@ -1,7 +1,7 @@
 name: Terratest - terraform-oci-easy-block-network-vcn - 02-context
 
-on:
-  - pull_request
+# on:
+#   - pull_request
 
 jobs:
   build:
