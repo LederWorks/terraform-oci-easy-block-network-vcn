@@ -1,7 +1,16 @@
+# $$\    $$\  $$$$$$\  $$\   $$\ 
+# $$ |   $$ |$$  __$$\ $$$\  $$ |
+# $$ |   $$ |$$ /  \__|$$$$\ $$ |
+# \$$\  $$  |$$ |      $$ $$\$$ |
+#  \$$\$$  / $$ |      $$ \$$$$ |
+#   \$$$  /  $$ |  $$\ $$ |\$$$ |
+#    \$  /   \$$$$$$  |$$ | \$$ |
+#     \_/     \______/ \__|  \__|
+
 #Common
 variable "vcn_compartment_id" {
   type        = string
-  description = "The OCID of the compartment in which to create the VCN."
+  description = "(Required) The OCID of the compartment in which to create the VCN."
 }
 
 variable "vcn_name_suffix" {
@@ -19,13 +28,13 @@ variable "vcn_display_name" {
 #Tags
 variable "vcn_defined_tags" {
   type        = map(string)
-  description = "Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags."
+  description = "(Optional) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags."
   default     = {}
 }
 
 variable "vcn_freeform_tags" {
   type        = map(string)
-  description = "Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags."
+  description = "(Optional) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags."
   default     = {}
 
 }
@@ -33,19 +42,19 @@ variable "vcn_freeform_tags" {
 #Timeouts
 variable "vcn_timeout_create" {
   type        = string
-  description = "The amount of time to wait for the VCN to be created. Defaults to 10 minutes."
+  description = "(Optional) The amount of time to wait for the VCN to be created. Defaults to 10 minutes."
   default     = "10m"
 }
 
 variable "vcn_timeout_update" {
   type        = string
-  description = "The amount of time to wait for the VCN to be updated. Defaults to 10 minutes."
+  description = "(Optional) The amount of time to wait for the VCN to be updated. Defaults to 10 minutes."
   default     = "10m"
 }
 
 variable "vcn_timeout_delete" {
   type        = string
-  description = "The amount of time to wait for the VCN to be deleted. Defaults to 10 minutes."
+  description = "(Optional) The amount of time to wait for the VCN to be deleted. Defaults to 10 minutes."
   default     = "10m"
 }
 
@@ -60,29 +69,37 @@ variable "vcn_dns_label" {
   description = "A DNS label for the VCN, used in conjunction with the VNIC's hostname and subnet's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, bminstance1.subnet123.vcn1.oraclevcn.com). Must be an alphanumeric string that begins with a letter. The value cannot be changed."
 }
 
+#  $$$$$$\  $$\   $$\ $$$$$$$\  $$\   $$\ $$$$$$$$\ $$$$$$$$\ 
+# $$  __$$\ $$ |  $$ |$$  __$$\ $$$\  $$ |$$  _____|\__$$  __|
+# $$ /  \__|$$ |  $$ |$$ |  $$ |$$$$\ $$ |$$ |         $$ |   
+# \$$$$$$\  $$ |  $$ |$$$$$$$\ |$$ $$\$$ |$$$$$\       $$ |   
+#  \____$$\ $$ |  $$ |$$  __$$\ $$ \$$$$ |$$  __|      $$ |   
+# $$\   $$ |$$ |  $$ |$$ |  $$ |$$ |\$$$ |$$ |         $$ |   
+# \$$$$$$  |\$$$$$$  |$$$$$$$  |$$ | \$$ |$$$$$$$$\    $$ |   
+#  \______/  \______/ \_______/ \__|  \__|\________|   \__|   
 #Subnets
 variable "vcn_internet_ingress_disabled" {
   type        = bool
-  description = "Whether the VCN has internet ingress disabled. Defaults to true."
+  description = "(Optional) Whether the Subnets has internet ingress disabled. Defaults to true."
   default     = true
 }
 
 variable "vcn_public_ip_on_vnic_disabled" {
   type        = bool
-  description = "Whether the VCN has public IP on VNIC disabled. Defaults to true."
+  description = "(Optional) Whether the Subnets has public IP on VNIC disabled. Defaults to true."
   default     = true
 }
 
 variable "vcn_security_list_ids" {
   type = set(string)
-  description = "The OCIDs of the security lists the VCN will use. If you don't provide any security list OCIDs, the VCN will use the default security list. Remember that security lists are associated with the VCN, but the rules are applied to the individual VNICs in the VCN."
+  description = "(Optional) The OCIDs of the security lists the Subnets will use. If you don't provide any security list OCIDs, the VCN will use the default security list. Remember that security lists are associated with the VCN, but the rules are applied to the individual VNICs in the VCN."
   default     = []
 }
 
 variable "vcn_route_table_id" {
   type = string
   default = null
-  description = "value"
+  description = "(Optional) The OCID of the route table the Subnets will use. If you don't provide a value, the VCN will use the default route table."
 }
 
 variable "vcn_subnets" {
@@ -105,7 +122,7 @@ variable "vcn_subnets" {
     internet_ingress_disabled  = optional(bool)
     public_ip_on_vnic_disabled = optional(bool)
     route_table_id             = optional(string)
-    security_list_ids          = optional(list(string))
+    security_list_ids          = optional(list(string), [])
   }))
   default     = {}
   description = <<EOT
@@ -147,6 +164,14 @@ variable "vcn_subnets" {
   }
 }
 
+# $$$$$$$\  $$\   $$\  $$$$$$\  
+# $$  __$$\ $$$\  $$ |$$  __$$\ 
+# $$ |  $$ |$$$$\ $$ |$$ /  \__|
+# $$ |  $$ |$$ $$\$$ |\$$$$$$\  
+# $$ |  $$ |$$ \$$$$ | \____$$\ 
+# $$ |  $$ |$$ |\$$$ |$$\   $$ |
+# $$$$$$$  |$$ | \$$ |\$$$$$$  |
+# \_______/ \__|  \__| \______/ 
 #DNS
 variable "vcn_dns_manage" {
   type        = bool
