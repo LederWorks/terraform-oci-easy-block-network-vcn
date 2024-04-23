@@ -15,7 +15,6 @@ jobs:
       TF_VAR_USER_OCID: ${{ secrets.OCI_USER }}
       TF_VAR_PRIVATE_KEY: ${{ secrets.OCI_KEY }}
       TF_VAR_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
-      # TF_VAR_REGION: ${{ vars.OCI_REGION }}
 
     steps:
     - name: Checkout repository
