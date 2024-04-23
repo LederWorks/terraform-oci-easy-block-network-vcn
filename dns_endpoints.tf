@@ -26,7 +26,7 @@ locals {
   } : {}
 }
 
-#DNS resolver endpoint resources
+#DNS Resolver Endpoint resources
 resource "oci_dns_resolver_endpoint" "dns" {
   for_each = var.vcn_dns_endpoints != {} && var.vcn_dns_manage ? var.vcn_dns_endpoints : {}
 
@@ -43,3 +43,4 @@ resource "oci_dns_resolver_endpoint" "dns" {
   nsg_ids            = each.value.nsg_ids
 
 }
+

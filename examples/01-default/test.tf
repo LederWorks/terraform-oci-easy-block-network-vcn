@@ -41,6 +41,7 @@ module "terratest-network-vcn" {
 
     subnet2 = {
       cidr_block = "172.20.1.0/24"
+      dns_label = "test"
     }
     subnet3 = {
       cidr_block = "172.20.2.0/24"
