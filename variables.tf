@@ -5,14 +5,14 @@ variable "vcn_compartment_id" {
 }
 
 variable "vcn_name_suffix" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "(Optional) Required when var.context is declared. Exclusive to vcn_display_name. The suffix to append to the VCN name."
 }
 
 variable "vcn_display_name" {
   type        = string
-  default = null
+  default     = null
   description = "(Optional) Updatable when var.context is omited. Exclusive to vcn_name_suffix. A user-friendly name. Does not have to be unique, and it's changeable."
 }
 
@@ -127,6 +127,12 @@ variable "vcn_subnets" {
 }
 
 #DNS
+variable "vcn_dns_manage" {
+  type = bool
+  default = false
+  description = "(Optional) Whether to manage the DNS resolver with this module. Defaults to false."
+}
+
 variable "vcn_dns_name_suffix" {
   type        = string
   default     = null

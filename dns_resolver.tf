@@ -1,25 +1,38 @@
-check "vcn_state" {
-  data "oci_core_vcn" "vcn" {
-    # depends_on = [oci_core_vcn.vcn]
-    vcn_id     = oci_core_vcn.vcn.id
-  }
+#DNS Resolver
+locals {
+  dns_resolver_shortname = "dnsr"
+  dns_resolver_name      = var.context != null ? lower("${local.dns_resolver_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${var.vcn_dns_name_suffix}") : null
 
-  assert {
-    condition     = data.oci_core_vcn.vcn.state == "AVAILABLE"
-    error_message = "The VCN must be in the AVAILABLE state before oci_core_vcn_dns_resolver_association can be created."
+  dns_resolver = {
+    ocid            = oci_dns_resolver.dns.id,
+    self            = oci_dns_resolver.dns.self,
+    state           = oci_dns_resolver.dns.state,
+    is_protected    = oci_dns_resolver.dns.is_protected,
+    display_name    = oci_dns_resolver.dns.display_name,
+    scope           = oci_dns_resolver.dns.scope,
+    endpoints       = oci_dns_resolver.dns.endpoints,
+    attached_vcn_id = oci_dns_resolver.dns.attached_vcn_id,
+    compartment_id  = oci_dns_resolver.dns.compartment_id,
+    default_view_id = oci_dns_resolver.dns.default_view_id,
+    attached_views  = oci_dns_resolver.dns.attached_views,
+    rules           = oci_dns_resolver.dns.rules,
+    defined_tags    = oci_dns_resolver.dns.defined_tags,
+    freeform_tags   = oci_dns_resolver.dns.freeform_tags,
   }
 }
 
+#Data for DNS resolver ID
 data "oci_core_vcn_dns_resolver_association" "dns" {
   lifecycle {
     precondition {
-      condition = oci_core_vcn.vcn.state == "AVAILABLE"
+      condition     = oci_core_vcn.vcn.state == "AVAILABLE"
       error_message = "The VCN must be in the AVAILABLE state to fetch its DNS resolver association data."
     }
   }
-  vcn_id     = oci_core_vcn.vcn.id
+  vcn_id = oci_core_vcn.vcn.id
 }
 
+#DNS resolver resource
 resource "oci_dns_resolver" "dns" {
   lifecycle {
     ignore_changes = [defined_tags]
@@ -50,21 +63,4 @@ resource "oci_dns_resolver" "dns" {
       source_endpoint_name      = rules.value.source_endpoint_name
     }
   }
-}
-
-resource "oci_dns_resolver_endpoint" "dns" {
-  for_each = var.vcn_dns_endpoints != {} ? var.vcn_dns_endpoints : {}
-
-  name          = each.value.name
-  resolver_id   = oci_dns_resolver.dns.id
-  subnet_id     = each.value.subnet_id
-  scope         = var.vcn_dns_private_scope_enabled ? "PRIVATE" : null
-  is_forwarding = each.value.forwarding_enabled
-  is_listening  = each.value.listening_enabled
-
-  endpoint_type      = each.value.endpoint_type
-  forwarding_address = each.value.forwarding_address
-  listening_address  = each.value.listening_address
-  nsg_ids            = each.value.nsg_ids
-
 }

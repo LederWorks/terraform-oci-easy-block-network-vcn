@@ -6,9 +6,9 @@ module "terratest-network-vcn" {
   vcn_display_name   = "terratest-vcn"
   vcn_cidr_blocks    = ["172.20.0.0/16", "172.21.0.0/16", "172.22.0.0/16"]
   vcn_dns_label      = "terratest"
-  # vcn_defined_tags = {
-  #   "CreatedBy" = "Terraform"
-  # }
+
+  vcn_defined_tags = {}
+
   vcn_freeform_tags = {
     "Terraform" = "True"
   }
@@ -23,16 +23,16 @@ module "terratest-network-vcn" {
       #Common
       compartment_id = local.compartment_id
       display_name   = "terratest-subnet1"
-      # defined_tags   = {}
-      freeform_tags  = {
+      defined_tags   = {}
+      freeform_tags = {
         "deployment_mode" = "terraform"
       }
 
       #Config
       # availability_domain        = ""
-      cidr_block                 = "172.20.0.0/24"
+      cidr_block = "172.20.0.0/24"
       # dhcp_options_id            = ""
-      dns_label                  = "test"
+      dns_label = "test"
       # internet_ingress_disabled  = false
       # public_ip_on_vnic_disabled = false
       # route_table_id             = ""

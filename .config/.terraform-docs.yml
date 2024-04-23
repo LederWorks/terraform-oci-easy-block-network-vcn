@@ -24,9 +24,19 @@ content: |-
 
   ## Examples
 
-  ### Example 1
+  ### Example 1 - Simple VCN and Subnet setup
   ```hcl
   {{ include "examples/01-default/test.tf" }}
+  ```
+
+  ### Example 2 - VCN and Subnet setup with a context module
+  
+   ```hcl
+  {{ include "examples/02-context/context.tf" }}
+  ```
+
+  ```hcl
+  {{ include "examples/02-context/test.tf" }}
   ```
 
   {{ .Resources }}

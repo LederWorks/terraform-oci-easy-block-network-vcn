@@ -17,11 +17,11 @@ provider "oci" {
 
 #Versions
 terraform {
-  required_version = ">=1.3.6"
+  required_version = ">= 1.6.0"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.99.0"
+      version = "3.100.0"
     }
     oci = {
       source  = "oracle/oci"

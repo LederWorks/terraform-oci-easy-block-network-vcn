@@ -1,28 +1,32 @@
-#VCN
-resource "oci_core_vcn" "vcn" {
-  lifecycle {
-    ignore_changes = [defined_tags]
+#Subnets
+locals {
+  subnet_shortname = "snet"
+  subnet_names = var.context != null ? { for subnet_key, subnet in var.vcn_subnets :
+    subnet_key => lower("${local.subnet_shortname}-${var.context.short_region}-${var.context.environment}-${var.context.project}-${subnet.name_suffix}")
+  } : {}
+
+  subnets = {
+    for subnet_key, subnet in oci_core_subnet.subnet :
+    "${subnet_key}" => {
+      ocid              = subnet.id,
+      state             = subnet.state,
+      cidr_block        = subnet.cidr_block,
+      display_name      = subnet.display_name,
+      dns_label         = subnet.dns_label,
+      domain_name       = subnet.subnet_domain_name,
+      compartment_id    = subnet.compartment_id,
+      vcn_id            = subnet.vcn_id,
+      gateway_ip        = subnet.virtual_router_ip,
+      gateway_mac       = subnet.virtual_router_mac,
+      dhcp_options_id   = subnet.dhcp_options_id,
+      route_table_id    = subnet.route_table_id,
+      security_list_ids = subnet.security_list_ids,
+      defined_tags      = subnet.defined_tags,
+      freeform_tags     = subnet.freeform_tags,
+    }
   }
-
-  #Timeouts
-  timeouts {
-    create = var.vcn_timeout_create
-    update = var.vcn_timeout_update
-    delete = var.vcn_timeout_delete
-  }
-
-  #Common
-  compartment_id = var.vcn_compartment_id
-  display_name   = var.context != null ? local.vcn_name : var.vcn_display_name
-  defined_tags   = local.defined_tags
-  freeform_tags  = local.freeform_tags
-
-  #Config
-  cidr_blocks = var.vcn_cidr_blocks
-  dns_label   = var.vcn_dns_label
 }
 
-#Subnets
 resource "oci_core_subnet" "subnet" {
   for_each = var.vcn_subnets != {} ? var.vcn_subnets : {}
 

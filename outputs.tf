@@ -4,7 +4,7 @@ output "vcn" {
   description = "The VCN managed by this module."
 }
 output "vcn_name" {
-  value = local.vcn_name
+  value       = local.vcn_name
   description = "FOR DEVELOPMENT"
 }
 
@@ -14,7 +14,7 @@ output "subnets" {
   description = "A map of all the subnets managed by this module."
 }
 output "subnet_names" {
-  value = local.subnet_names
+  value       = local.subnet_names
   description = "FOR DEVELOPMENT"
 }
 
@@ -24,7 +24,7 @@ output "dns_resolver" {
   description = "The DNS Resolver managed by this module."
 }
 output "dns_resolver_name" {
-  value = local.dns_resolver_name
+  value       = local.dns_resolver_name
   description = "FOR DEVELOPMENT"
 }
 
@@ -32,4 +32,8 @@ output "dns_resolver_name" {
 output "dns_endpoints" {
   value       = local.dns_endpoints
   description = "A map of all the DNS Resolver Endpoints managed by this module."
+}
+output "dns_endpoint_names" {
+  value       = local.dns_endpoint_names
+  description = "FOR DEVELOPMENT"
 }
