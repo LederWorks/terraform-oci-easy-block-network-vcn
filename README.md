@@ -22,9 +22,7 @@ This module implements the [SECTION](https://lederworks.com/docs/microsoft-azure
 
 The following requirements are needed by this module:
 
-- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.3.6)
-
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (>= 3.60.0)
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.6.0)
 
 - <a name="requirement_oci"></a> [oci](#requirement\_oci) (>= 5.0.0)
 
@@ -36,7 +34,7 @@ The following providers are used by this module:
 
 ## Examples
 
-### Example 1
+### Example 1 - Simple VCN and Subnet setup
 ```hcl
 # Module Test
 module "terratest-network-vcn" {
@@ -46,9 +44,9 @@ module "terratest-network-vcn" {
   vcn_display_name   = "terratest-vcn"
   vcn_cidr_blocks    = ["172.20.0.0/16", "172.21.0.0/16", "172.22.0.0/16"]
   vcn_dns_label      = "terratest"
-  # vcn_defined_tags = {
-  #   "CreatedBy" = "Terraform"
-  # }
+
+  vcn_defined_tags = {}
+
   vcn_freeform_tags = {
     "Terraform" = "True"
   }
@@ -63,16 +61,16 @@ module "terratest-network-vcn" {
       #Common
       compartment_id = local.compartment_id
       display_name   = "terratest-subnet1"
-      # defined_tags   = {}
-      freeform_tags  = {
+      defined_tags   = {}
+      freeform_tags = {
         "deployment_mode" = "terraform"
       }
 
       #Config
       # availability_domain        = ""
-      cidr_block                 = "172.20.0.0/24"
+      cidr_block = "172.20.0.0/24"
       # dhcp_options_id            = ""
-      dns_label                  = "test"
+      dns_label = "test"
       # internet_ingress_disabled  = false
       # public_ip_on_vnic_disabled = false
       # route_table_id             = ""
@@ -86,7 +84,40 @@ module "terratest-network-vcn" {
       cidr_block = "172.20.2.0/24"
     }
   }
+
+  vcn_dns_manage = true
 }
+```
+
+### Example 2 - VCN and Subnet setup with a context module
+
+```hcl
+module "context" {
+  source = "git::https://github.com/LederWorks/terraform-generic-easy-context.git?ref=v0.5.0"
+
+
+  subsidiary  = "candy"
+  cloud       = "oci"
+  environment = "int"
+  # region      = "eu-frankfurt-1"
+  region  = "westeurope"
+  project     = "form"
+  department  = "pd"
+
+  tags = {
+    OwnerOU      = "pd"
+    OwnerContact = "contact@lederworks.com"
+    Sweetness    = "honeypot"
+  }
+
+  custom_tags = {
+    poc = "vcn"
+  }
+}
+```
+
+```hcl
+#Test with context module
 ```
 
 ## Resources
@@ -111,12 +142,6 @@ Type: `list(string)`
 ### <a name="input_vcn_compartment_id"></a> [vcn\_compartment\_id](#input\_vcn\_compartment\_id)
 
 Description: The OCID of the compartment in which to create the VCN.
-
-Type: `string`
-
-### <a name="input_vcn_display_name"></a> [vcn\_display\_name](#input\_vcn\_display\_name)
-
-Description: A user-friendly name. Does not have to be unique, and it's changeable.
 
 Type: `string`
 
@@ -146,6 +171,14 @@ Type: `map(string)`
 
 Default: `{}`
 
+### <a name="input_vcn_display_name"></a> [vcn\_display\_name](#input\_vcn\_display\_name)
+
+Description: (Optional) Updatable when var.context is omited. Exclusive to vcn\_name\_suffix. A user-friendly name. Does not have to be unique, and it's changeable.
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_vcn_dns_attached_view_ids"></a> [vcn\_dns\_attached\_view\_ids](#input\_vcn\_dns\_attached\_view\_ids)
 
 Description: (Optional) (Updatable) The attached views OCIDs. Views are evaluated in order.
@@ -156,7 +189,7 @@ Default: `{}`
 
 ### <a name="input_vcn_dns_display_name"></a> [vcn\_dns\_display\_name](#input\_vcn\_dns\_display\_name)
 
-Description: (Optional) (Updatable) The display name of the resolver.
+Description: (Optional) Updatable when var.context is omited. Exclusive to vcn\_dns\_name\_suffix. The display name of the resolver.
 
 Type: `string`
 
@@ -182,6 +215,22 @@ map(object({
 ```
 
 Default: `{}`
+
+### <a name="input_vcn_dns_manage"></a> [vcn\_dns\_manage](#input\_vcn\_dns\_manage)
+
+Description: (Optional) Whether to manage the DNS resolver with this module. Defaults to false.
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_vcn_dns_name_suffix"></a> [vcn\_dns\_name\_suffix](#input\_vcn\_dns\_name\_suffix)
+
+Description: (Optional) Required when var.context is declared. Exclusive to vcn\_dns\_display\_name. The suffix to append to the DNS Resolver name.
+
+Type: `string`
+
+Default: `null`
 
 ### <a name="input_vcn_dns_private_scope_enabled"></a> [vcn\_dns\_private\_scope\_enabled](#input\_vcn\_dns\_private\_scope\_enabled)
 
@@ -224,6 +273,14 @@ Description: Whether the VCN has internet ingress disabled. Defaults to true.
 Type: `bool`
 
 Default: `true`
+
+### <a name="input_vcn_name_suffix"></a> [vcn\_name\_suffix](#input\_vcn\_name\_suffix)
+
+Description: (Optional) Required when var.context is declared. Exclusive to vcn\_display\_name. The suffix to append to the VCN name.
+
+Type: `string`
+
+Default: `null`
 
 ### <a name="input_vcn_public_ip_on_vnic_disabled"></a> [vcn\_public\_ip\_on\_vnic\_disabled](#input\_vcn\_public\_ip\_on\_vnic\_disabled)
 
@@ -316,9 +373,25 @@ Default: `"10m"`
 
 The following outputs are exported:
 
+### <a name="output_dns_endpoint_names"></a> [dns\_endpoint\_names](#output\_dns\_endpoint\_names)
+
+Description: FOR DEVELOPMENT
+
+### <a name="output_dns_endpoints"></a> [dns\_endpoints](#output\_dns\_endpoints)
+
+Description: A map of all the DNS Resolver Endpoints managed by this module.
+
 ### <a name="output_dns_resolver"></a> [dns\_resolver](#output\_dns\_resolver)
 
 Description: The DNS Resolver managed by this module.
+
+### <a name="output_dns_resolver_name"></a> [dns\_resolver\_name](#output\_dns\_resolver\_name)
+
+Description: FOR DEVELOPMENT
+
+### <a name="output_subnet_names"></a> [subnet\_names](#output\_subnet\_names)
+
+Description: FOR DEVELOPMENT
 
 ### <a name="output_subnets"></a> [subnets](#output\_subnets)
 
@@ -327,6 +400,10 @@ Description: A map of all the subnets managed by this module.
 ### <a name="output_vcn"></a> [vcn](#output\_vcn)
 
 Description: The VCN managed by this module.
+
+### <a name="output_vcn_name"></a> [vcn\_name](#output\_vcn\_name)
+
+Description: FOR DEVELOPMENT
 
 <!-- markdownlint-disable-file MD033 MD012 -->
 ## Contributing
