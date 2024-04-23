@@ -97,13 +97,13 @@ variable "vcn_dhcp_options_id" {
 }
 
 variable "vcn_route_table_id" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "(Optional) The OCID of the route table the Subnets will use. If you don't provide a value, the VCN will use the default route table."
 }
 
 variable "vcn_security_list_ids" {
-  type = list(string)
+  type        = list(string)
   default     = []
   description = "(Optional) The OCIDs of the security lists the Subnets will use. If you don't provide any security list OCIDs, the VCN will use the default security list. Remember that security lists are associated with the VCN, but the rules are applied to the individual VNICs in the VCN."
 }
